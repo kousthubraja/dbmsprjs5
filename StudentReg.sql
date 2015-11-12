@@ -1,0 +1,70 @@
+CREATE DATABASE STUDENTREG;
+
+USE STUDENTREG;
+
+CREATE TABLE Stud_details
+(
+	Roll_No VARCHAR(10),
+	Name VARCHAR(10),
+	DOB DATE,
+	Address  VARCHAR(200),
+	Sex VARCHAR(1),
+	YOJ DATE,
+	Guardian VARCHAR(40),
+	Phone VARCHAR(15),
+	Guardian_Phone VARCHAR(15),
+	Blood_Group VARCHAR(3),
+	PRIMARY KEY(Roll_No)
+);
+
+CREATE TABLE Library_Dues
+(
+	Roll_No VARCHAR(10),
+	Has_Dues boolean,
+	PRIMARY KEY(Roll_No),
+	FOREIGN KEY(Roll_No) REFERENCES Stud_details(Roll_No)
+);
+
+CREATE TABLE Hostel_Dues
+(
+	Roll_No VARCHAR(10),
+	Dues FLOAT,
+	PRIMARY KEY(Roll_No),
+	FOREIGN KEY(Roll_No) REFERENCES Stud_details(Roll_No)
+);
+
+CREATE TABLE Selected_Courses
+(
+	Roll_No VARCHAR(10),
+	CID VARCHAR(7),
+	PRIMARY KEY(Roll_No,CID),
+	FOREIGN KEY(Roll_No) REFERENCES Stud_details(Roll_No),
+	FOREIGN KEY(CID) REFERENCES Courses(CID)
+);
+
+CREATE TABLE Teacher
+(
+	TID VARCHAR(10),
+	TName VARCHAR(40),
+	DOB DATE,
+	Dept VARCHAR(3),
+	Designation VARCHAR(20),
+	Qualification VARCHAR(20),
+	PRIMARY KEY(TID)
+);
+
+CREATE TABLE Courses
+(
+	CID VARCHAR(7),
+	CName VARCHAR(30),
+	Dept VARCHAR(3),
+	Semester VARCHAR(5),
+	Core boolean,
+	TID1 VARCHAR(10),
+	TID2 VARCHAR(10)
+	Credit NUMBER,
+	Theory boolean,
+	PRIMARY KEY(CID),
+	FOREIGN KEY(TID1) REFERENCES Teacher(TID),
+	FOREIGN KEY(TID2) REFERENCES Teacher(TID)
+);
